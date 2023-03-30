@@ -16,7 +16,7 @@
                 }
             ]
         },
-        "createdAlertsID": "[\"\/api\/3\/alerts\/c8346414-6a30-43f6-bc48-c8675c7b0eb1\"]",
+        "createdAlertsID": "",
         "uuid": "b948342a-9300-47e6-9635-ddd4208db4a4",
         "createUser": "\/api\/3\/people\/3451141c-bac6-467c-8d72-85e0fab569ce",
         "createDate": 1680079906.118178,

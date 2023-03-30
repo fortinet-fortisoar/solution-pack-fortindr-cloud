@@ -22,33 +22,20 @@
     "prerequisite": null,
     "publisher": "Fortinet",
     "description": "This FortiSOAR Solution Pack for FortiNDR Cloud offering helps customers to readily orchestrate the investigation of detection.",
-    "help": null,
+    "help": "https://github.com/fortinet-fortisoar/solution-pack-fortindr-cloud/blob/release/1.0.0/README.md",
     "category": [
         "Cloud Security"
     ],
-    "supportInfo": null,
+    "supportInfo": "Fortinet Support",
     "iconLarge": "fsr-icon-large.png",
     "date": "2023-03-30T09:15:16+00:00",
     "contents": {
-        "modules": {
-            "scenario": {
-                "name": "Scenario",
-                "apiName": "scenario"
-            }
-        },
         "playbooks": [
             {
                 "name": "02 - Use Case - FortiNDR Cloud"
             }
         ],
-        "globalVariables": [
-            {
-                "id": 16,
-                "name": "Demo_mode",
-                "value": "false",
-                "default_value": "false"
-            }
-        ],
+        "globalVariables": [],
         "connectors": [
             {
                 "name": "Fortinet FortiNDR Cloud",

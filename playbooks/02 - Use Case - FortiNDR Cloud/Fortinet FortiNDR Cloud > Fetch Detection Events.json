@@ -44,6 +44,27 @@
         },
         {
             "@type": "WorkflowStep",
+            "name": "Extract Indicators",
+            "description": null,
+            "arguments": {
+                "arguments": {
+                    "alertMetaData": "{{vars.steps.Update_Record}}"
+                },
+                "apply_async": false,
+                "step_variables": [],
+                "pass_parent_env": false,
+                "pass_input_record": true,
+                "workflowReference": "\/api\/3\/workflows\/bff221c6-1a9b-4486-8180-6841e7a59f34"
+            },
+            "status": null,
+            "top": "840",
+            "left": "125",
+            "stepType": "\/api\/3\/workflow_step_types\/74932bdc-b8b6-4d24-88c4-1a4dfbc524f3",
+            "group": null,
+            "uuid": "401c8ae1-cbd6-420b-bc17-40344bbb009a"
+        },
+        {
+            "@type": "WorkflowStep",
             "name": "Configuration",
             "description": null,
             "arguments": {
@@ -206,6 +227,15 @@
         },
         {
             "@type": "WorkflowRoute",
+            "name": "Update Record -> Extract Indicators",
+            "targetStep": "\/api\/3\/workflow_steps\/401c8ae1-cbd6-420b-bc17-40344bbb009a",
+            "sourceStep": "\/api\/3\/workflow_steps\/0148eda7-688a-4bf7-8ab3-0c95c2440703",
+            "label": null,
+            "isExecuted": false,
+            "uuid": "bda3c30d-4003-4828-9d86-542bd069efeb"
+        },
+        {
+            "@type": "WorkflowRoute",
             "name": "Update Detection Data -> Update Record",
             "targetStep": "\/api\/3\/workflow_steps\/0148eda7-688a-4bf7-8ab3-0c95c2440703",
             "sourceStep": "\/api\/3\/workflow_steps\/c703178b-5a8d-4ad2-a2b0-2f28ff317efa",
@@ -220,5 +250,7 @@
     "owners": [],
     "isPrivate": false,
     "deletedAt": null,
-    "recordTags": []
+    "recordTags": [
+        "ManualAction"
+    ]
 }
