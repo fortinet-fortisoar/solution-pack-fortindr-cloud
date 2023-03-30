@@ -1,0 +1,31 @@
+[
+    {
+        "@type": "Scenario",
+        "configuration": null,
+        "title": "FortiNDR Detections",
+        "description": "FortiNDR Cloud detects network anomalies and malicious content on your network.\n\nObserve the following\n* Detection Information (Status, Category, Confidence, Next steps etc) is presented as a handy reference\n* On receiving information from FortiNDR Cloud related to Detection FortiSOAR will create the Alert and after triggering Playbook \"Fetch Detection Events\", it will get all events related to that specific Detection and updates the indicators like IP Addresses, Files hashes etc.",
+        "steps": {
+            "Steps": [
+                {
+                    "name": "High Risk Typo Domain Response",
+                    "type": "executePlaybook",
+                    "playbookIRI": "\/api\/3\/workflows\/83dfbd95-2239-4a5f-96bc-b281d473e434",
+                    "preCreateMessage": "Creating demo alert record ",
+                    "postCreateMessage": "",
+                    "waitTimeforNextStep": "0"
+                }
+            ]
+        },
+        "createdAlertsID": "[\"\/api\/3\/alerts\/c8346414-6a30-43f6-bc48-c8675c7b0eb1\"]",
+        "uuid": "b948342a-9300-47e6-9635-ddd4208db4a4",
+        "createUser": "\/api\/3\/people\/3451141c-bac6-467c-8d72-85e0fab569ce",
+        "createDate": 1680079906.118178,
+        "modifyUser": "\/api\/3\/appliances\/57545210-2adc-472b-a24f-2df6ee8dfe63",
+        "modifyDate": 1680098904.169083,
+        "id": 3,
+        "recordTags": [
+            "FortiNDR",
+            "FortiNDR Cloud"
+        ]
+    }
+]

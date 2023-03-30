@@ -1,0 +1,66 @@
+{
+    "name": "fortiNDRCloud",
+    "version": "1.0.0",
+    "fsrMinCompatibility": "7.2.0",
+    "type": "solutionpack",
+    "local": true,
+    "label": "FortiNDR Cloud",
+    "dependencies": [
+        {
+            "name": "sOARFramework",
+            "type": "solutionpack",
+            "label": "SOAR Framework",
+            "minVersion": "2.1.0"
+        },
+        {
+            "name": "socSimulator",
+            "type": "solutionpack",
+            "label": "SOC Simulator",
+            "minVersion": null
+        }
+    ],
+    "prerequisite": null,
+    "publisher": "Fortinet",
+    "description": "This FortiSOAR Solution Pack for FortiNDR Cloud offering helps customers to readily orchestrate the investigation of detection.",
+    "help": null,
+    "category": [
+        "Cloud Security"
+    ],
+    "supportInfo": null,
+    "iconLarge": "fsr-icon-large.png",
+    "date": "2023-03-30T09:15:16+00:00",
+    "contents": {
+        "modules": {
+            "scenario": {
+                "name": "Scenario",
+                "apiName": "scenario"
+            }
+        },
+        "playbooks": [
+            {
+                "name": "02 - Use Case - FortiNDR Cloud"
+            }
+        ],
+        "globalVariables": [
+            {
+                "id": 16,
+                "name": "Demo_mode",
+                "value": "false",
+                "default_value": "false"
+            }
+        ],
+        "connectors": [
+            {
+                "name": "Fortinet FortiNDR Cloud",
+                "apiName": "fortinet-fortindr-cloud"
+            }
+        ],
+        "recordSets": [
+            {
+                "name": "Scenario",
+                "apiName": "scenario",
+                "count": 1
+            }
+        ]
+    }
+}

@@ -1,0 +1,224 @@
+{
+    "@type": "Workflow",
+    "triggerLimit": null,
+    "name": "Fortinet FortiNDR Cloud > Fetch Detection Events",
+    "aliasName": null,
+    "tag": null,
+    "description": "Fetch events for specified detection.",
+    "isActive": true,
+    "debug": false,
+    "singleRecordExecution": false,
+    "remoteExecutableFlag": false,
+    "parameters": [
+        "detection",
+        "eventlimit"
+    ],
+    "synchronous": false,
+    "collection": "\/api\/3\/workflow_collections\/a07f5e51-f153-4c8b-a158-56ab4934d704",
+    "versions": [],
+    "triggerStep": "\/api\/3\/workflow_steps\/ef706baa-4f59-47f8-95a1-4cd9b8d3bcfd",
+    "steps": [
+        {
+            "@type": "WorkflowStep",
+            "name": "Update Record",
+            "description": null,
+            "arguments": {
+                "resource": {
+                    "fileHashes": "{{vars.file_hashes}}",
+                    "sourcedata": "{{vars.data_detection | toJSON}}",
+                    "iPAddresses": "{{vars.destination_ips}}"
+                },
+                "operation": "Append",
+                "collection": "{{vars.input.records[0]['@id']}}",
+                "__recommend": [],
+                "collectionType": "\/api\/3\/alerts",
+                "fieldOperation": [],
+                "step_variables": []
+            },
+            "status": null,
+            "top": "705",
+            "left": "125",
+            "stepType": "\/api\/3\/workflow_step_types\/b593663d-7d13-40ce-a3a3-96dece928722",
+            "group": null,
+            "uuid": "0148eda7-688a-4bf7-8ab3-0c95c2440703"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Configuration",
+            "description": null,
+            "arguments": {
+                "useMockOutput": "{{globalVars.Demo_mode}}",
+                "data_detection": "{{vars.input.records[0].sourcedata | from_json}}",
+                "detection_uuid": "{{vars.input.records[0].sourceId}}",
+                "number_of_events_to_pull": "10"
+            },
+            "status": null,
+            "top": "165",
+            "left": "125",
+            "stepType": "\/api\/3\/workflow_step_types\/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+            "group": null,
+            "uuid": "4cd2c0b0-1ee7-4d3c-a3d1-b43d209b9a91"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Link the Asset",
+            "description": null,
+            "arguments": {
+                "resource": {
+                    "ip": "{{vars.input.records[0].sourceIp}}",
+                    "name": "{{vars.input.records[0].sourceIp}}",
+                    "alerts": "{{vars.input.records[0]['@id']}}",
+                    "hostname": "{{vars.input.records[0].sourceIp}}",
+                    "__replace": "true",
+                    "macAddress": "None"
+                },
+                "operation": "Overwrite",
+                "collection": "\/api\/3\/upsert\/assets",
+                "__recommend": [],
+                "fieldOperation": {
+                    "protocol": "Overwrite"
+                },
+                "step_variables": []
+            },
+            "status": null,
+            "top": "300",
+            "left": "125",
+            "stepType": "\/api\/3\/workflow_step_types\/2597053c-e718-44b4-8394-4d40fe26d357",
+            "group": null,
+            "uuid": "b39c2af6-db96-460a-bcd2-cfe2af2886b0"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Get Detection Events",
+            "description": null,
+            "arguments": {
+                "name": "Fortinet FortiNDR Cloud",
+                "config": "caf27e1f-7162-4368-8725-48f3f1951762",
+                "params": {
+                    "limit": "{{vars.number_of_events_to_pull}}",
+                    "offset": 0,
+                    "detection_uuid": "{{vars.detection_uuid}}"
+                },
+                "version": "1.0.0",
+                "connector": "fortinet-fortindr-cloud",
+                "operation": "get_detection_events",
+                "mock_result": "{\n  \"data\": {\n    \"events\": [\n      {\n        \"event\": {\n          \"dst\": {\n            \"ip\": \"66.231.239.55\",\n            \"asn\": {\n              \"asn\": 22364,\n              \"isp\": null,\n              \"org\": null,\n              \"asn_org\": \"AS-22364\"\n            },\n            \"geo\": {\n              \"city\": \"Hollywood\",\n              \"country\": \"US\",\n              \"location\": null,\n              \"subdivision\": \"FL\"\n            },\n            \"pkts\": null,\n            \"port\": 80,\n            \"internal\": false,\n            \"ip_bytes\": null\n          },\n          \"src\": {\n            \"ip\": \"10.1.70.200\",\n            \"asn\": null,\n            \"geo\": null,\n            \"pkts\": null,\n            \"port\": 49782,\n            \"internal\": true,\n            \"ip_bytes\": null\n          },\n          \"uri\": {\n            \"uri\": \"\/common\/2017\/07\/21\/230d6e09-6b0f-4ce0-83cc-ac0d12df9f0b.jpg\",\n            \"host\": null,\n            \"path\": \"\/common\/2017\/07\/21\/230d6e09-6b0f-4ce0-83cc-ac0d12df9f0b.jpg\",\n            \"port\": -1,\n            \"query\": null,\n            \"scheme\": null,\n            \"fragment\": null\n          },\n          \"host\": {\n            \"domain\": \"static.iyingdi.cn\",\n            \"domain_entropy\": 3.1462900638580322\n          },\n          \"uuid\": \"00c6b7fc-a07e-11ed-8957-02bd6afdaa6d\",\n          \"files\": [\n            {\n              \"md5\": \"3de1609064a5b078a3b0b1cb4cdd4565\",\n              \"name\": null,\n              \"sha1\": \"a616eb6ff6dec434166f4093a0a4291afcbc3494\",\n              \"bytes\": 523061,\n              \"sha256\": \"b046e4b0870a8844364ed5214f1b02f786e25ae3cfa833c8141ca93c6918a21d\",\n              \"mime_type\": null\n            }\n          ],\n          \"intel\": null,\n          \"method\": \"GET\",\n          \"source\": \"Zeek\",\n          \"flow_id\": \"CMhlpq3rinSmVaL423\",\n          \"headers\": {\n            \"accept\": [\n              \"image\/png\",\n              \"image\/svg+xml\",\n              \"image\/jxr\",\n              \"image\/*;q=0.8\",\n              \"*\/*;q=0.5\"\n            ],\n            \"origin\": null,\n            \"server\": \"Tengine\",\n            \"refresh\": null,\n            \"location\": null,\n            \"content_md5\": \"PeFgkGSlsHijsLHLTN1FZQ==\",\n            \"content_type\": \"application\/octet-stream\",\n            \"x_powered_by\": null,\n            \"cookie_length\": 170,\n            \"proxied_client_ips\": null\n          },\n          \"proxied\": null,\n          \"info_msg\": null,\n          \"referrer\": {\n            \"uri\": \"http:\/\/iyingdi.cn\/\",\n            \"host\": {\n              \"domain\": \"iyingdi.cn\",\n              \"domain_entropy\": 2.646440029144287\n            },\n            \"path\": \"\/\",\n            \"port\": -1,\n            \"query\": null,\n            \"scheme\": \"http\",\n            \"fragment\": null\n          },\n          \"username\": null,\n          \"sensor_id\": \"gdm3\",\n          \"timestamp\": \"2023-01-30T09:07:14.851Z\",\n          \"event_type\": \"http\",\n          \"status_msg\": \"OK\",\n          \"user_agent\": \"Mozilla\/5.0 (Windows NT 10.0; WOW64; Trident\/7.0; rv:11.0) like Gecko\",\n          \"application\": null,\n          \"customer_id\": \"gdm\",\n          \"request_len\": 0,\n          \"status_code\": 200,\n          \"trans_depth\": 3,\n          \"geo_distance\": null,\n          \"request_mime\": null,\n          \"response_len\": 523061,\n          \"request_mimes\": null,\n          \"response_mime\": \"application\/x-executable\",\n          \"response_mimes\": [\n            \"application\/x-executable\"\n          ]\n        },\n        \"rule_uuid\": \"3a87c020-a7fe-48bf-b3fd-71aa40072f72\"\n      },\n      {\n        \"event\": {\n          \"dst\": {\n            \"ip\": \"66.231.239.55\",\n            \"asn\": {\n              \"asn\": 22364,\n              \"isp\": null,\n              \"org\": null,\n              \"asn_org\": \"AS-22364\"\n            },\n            \"geo\": {\n              \"city\": \"Hollywood\",\n              \"country\": \"US\",\n              \"location\": null,\n              \"subdivision\": \"FL\"\n            },\n            \"pkts\": null,\n            \"port\": 80,\n            \"internal\": false,\n            \"ip_bytes\": null\n          },\n          \"src\": {\n            \"ip\": \"10.1.70.200\",\n            \"asn\": null,\n            \"geo\": null,\n            \"pkts\": null,\n            \"port\": 49780,\n            \"internal\": true,\n            \"ip_bytes\": null\n          },\n          \"uri\": {\n            \"uri\": \"\/common\/2017\/07\/18\/8188d1c1-59ec-45ff-8f16-8b197a0d9091.jpg\",\n            \"host\": null,\n            \"path\": \"\/common\/2017\/07\/18\/8188d1c1-59ec-45ff-8f16-8b197a0d9091.jpg\",\n            \"port\": -1,\n            \"query\": null,\n            \"scheme\": null,\n            \"fragment\": null\n          },\n          \"host\": {\n            \"domain\": \"static.iyingdi.cn\",\n            \"domain_entropy\": 3.1462900638580322\n          },\n          \"uuid\": \"00c642bc-a07e-11ed-8957-02bd6afdaa6d\",\n          \"files\": [\n            {\n              \"md5\": \"9d57388d4933ee19d7827a4c16de7cdb\",\n              \"name\": null,\n              \"sha1\": \"00c423ef9fe59ed1dbe61cd3aac5997a1600664a\",\n              \"bytes\": 34274,\n              \"sha256\": \"b1e770c41d6b89734b6b111cc878679b7b60f08b93eb18abdc43587dd0e5112e\",\n              \"mime_type\": null\n            }\n          ],\n          \"intel\": null,\n          \"method\": \"GET\",\n          \"source\": \"Zeek\",\n          \"flow_id\": \"C9qLIiqalNLP7cUT2\",\n          \"headers\": {\n            \"accept\": [\n              \"image\/png\",\n              \"image\/svg+xml\",\n              \"image\/jxr\",\n              \"image\/*;q=0.8\",\n              \"*\/*;q=0.5\"\n            ],\n            \"origin\": null,\n            \"server\": \"Tengine\",\n            \"refresh\": null,\n            \"location\": null,\n            \"content_md5\": \"nVc4jUkz7hnXgnpMFt582w==\",\n            \"content_type\": \"application\/octet-stream\",\n            \"x_powered_by\": null,\n            \"cookie_length\": 170,\n            \"proxied_client_ips\": null\n          },\n          \"proxied\": null,\n          \"info_msg\": null,\n          \"referrer\": {\n            \"uri\": \"http:\/\/iyingdi.cn\/\",\n            \"host\": {\n              \"domain\": \"iyingdi.cn\",\n              \"domain_entropy\": 2.646440029144287\n            },\n            \"path\": \"\/\",\n            \"port\": -1,\n            \"query\": null,\n            \"scheme\": \"http\",\n            \"fragment\": null\n          },\n          \"username\": null,\n          \"sensor_id\": \"gdm3\",\n          \"timestamp\": \"2023-01-30T09:07:14.851Z\",\n          \"event_type\": \"http\",\n          \"status_msg\": \"OK\",\n          \"user_agent\": \"Mozilla\/5.0 (Windows NT 10.0; WOW64; Trident\/7.0; rv:11.0) like Gecko\",\n          \"application\": null,\n          \"customer_id\": \"gdm\",\n          \"request_len\": 0,\n          \"status_code\": 200,\n          \"trans_depth\": 2,\n          \"geo_distance\": null,\n          \"request_mime\": null,\n          \"response_len\": 34274,\n          \"request_mimes\": null,\n          \"response_mime\": \"application\/x-dosexec\",\n          \"response_mimes\": [\n            \"application\/x-dosexec\"\n          ]\n        },\n        \"rule_uuid\": \"3a87c020-a7fe-48bf-b3fd-71aa40072f72\"\n      },\n      {\n        \"event\": {\n          \"dst\": {\n            \"ip\": \"186.71.150.23\",\n            \"asn\": {\n              \"asn\": 14522,\n              \"isp\": \"Satnet\",\n              \"org\": \"Satnet\",\n              \"asn_org\": \"Satnet\"\n            },\n            \"geo\": {\n              \"city\": \"Ambato\",\n              \"country\": \"EC\",\n              \"location\": null,\n              \"subdivision\": \"T\"\n            },\n            \"pkts\": null,\n            \"port\": 449,\n            \"internal\": false,\n            \"ip_bytes\": null\n          },\n          \"ja3\": \"6734f37431670b3ab4292b8f60f29984\",\n          \"src\": {\n            \"ip\": \"10.10.31.5\",\n            \"asn\": null,\n            \"geo\": null,\n            \"pkts\": null,\n            \"port\": 51189,\n            \"internal\": true,\n            \"ip_bytes\": null\n          },\n          \"ja3s\": null,\n          \"uuid\": \"60f94a11-9fcf-11ed-976c-02836ecf6063\",\n          \"intel\": null,\n          \"cipher\": \"TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA\",\n          \"issuer\": \"O=Internet Widgits Pty Ltd,ST=Some-State,C=AU\",\n          \"source\": \"Zeek\",\n          \"flow_id\": \"ChxwJI2hrSOpdI7g95\",\n          \"subject\": \"O=Internet Widgits Pty Ltd,ST=Some-State,C=AU\",\n          \"version\": \"TLSv10\",\n          \"sensor_id\": \"gdm3\",\n          \"timestamp\": \"2023-01-29T12:16:47.259Z\",\n          \"event_type\": \"ssl\",\n          \"session_id\": null,\n          \"application\": null,\n          \"customer_id\": \"gdm\",\n          \"server_name\": null,\n          \"geo_distance\": null,\n          \"client_issuer\": null,\n          \"client_subject\": null,\n          \"validation_status\": null,\n          \"server_name_indication\": null\n        },\n        \"rule_uuid\": \"732df04c-fdbc-4715-93ce-809a6b9ebd74\"\n      },\n      {\n        \"event\": {\n          \"dst\": {\n            \"ip\": \"186.71.150.23\",\n            \"asn\": {\n              \"asn\": 14522,\n              \"isp\": \"Satnet\",\n              \"org\": \"Satnet\",\n              \"asn_org\": \"Satnet\"\n            },\n            \"geo\": {\n              \"city\": \"Ambato\",\n              \"country\": \"EC\",\n              \"location\": null,\n              \"subdivision\": \"T\"\n            },\n            \"pkts\": null,\n            \"port\": 449,\n            \"internal\": false,\n            \"ip_bytes\": null\n          },\n          \"ja3\": \"6734f37431670b3ab4292b8f60f29984\",\n          \"src\": {\n            \"ip\": \"10.10.31.5\",\n            \"asn\": null,\n            \"geo\": null,\n            \"pkts\": null,\n            \"port\": 51211,\n            \"internal\": true,\n            \"ip_bytes\": null\n          },\n          \"ja3s\": null,\n          \"uuid\": \"c69fab35-9fd0-11ed-b4cd-06032c951c55\",\n          \"intel\": null,\n          \"cipher\": \"TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA\",\n          \"issuer\": \"O=Internet Widgits Pty Ltd,ST=Some-State,C=AU\",\n          \"source\": \"Zeek\",\n          \"flow_id\": \"CJfkyVrRuHMyGHae8\",\n          \"subject\": \"O=Internet Widgits Pty Ltd,ST=Some-State,C=AU\",\n          \"version\": \"TLSv10\",\n          \"sensor_id\": \"gdm3\",\n          \"timestamp\": \"2023-01-29T12:22:04.179Z\",\n          \"event_type\": \"ssl\",\n          \"session_id\": null,\n          \"application\": null,\n          \"customer_id\": \"gdm\",\n          \"server_name\": null,\n          \"geo_distance\": null,\n          \"client_issuer\": null,\n          \"client_subject\": null,\n          \"validation_status\": null,\n          \"server_name_indication\": null\n        },\n        \"rule_uuid\": \"732df04c-fdbc-4715-93ce-809a6b9ebd74\"\n      }\n    ],\n    \"total_count\": 4,\n    \"result_count\": 4\n  },\n  \"status\": \"Success\",\n  \"message\": \"\",\n  \"operation\": null,\n  \"execution_time\": \"2 seconds 476 ms\"\n}",
+                "operationTitle": "Get Detection Events",
+                "pickFromTenant": false,
+                "step_variables": []
+            },
+            "status": null,
+            "top": "435",
+            "left": "125",
+            "stepType": "\/api\/3\/workflow_step_types\/0bfed618-0316-11e7-93ae-92361f002671",
+            "group": null,
+            "uuid": "ba89ed8f-e26a-404e-976d-5a0a3306b05d"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Update Detection Data",
+            "description": null,
+            "arguments": {
+                "file_hashes": "{{vars.steps.Get_Detection_Events.data.events | json_query(\"[].event.files\") | json_query(\"[].md5\") | unique}}",
+                "placeholder": "{{vars.data_detection.update({'events': vars.steps.Get_Detection_Events.data.events})}}",
+                "destination_ips": "{{vars.steps.Get_Detection_Events.data.events | json_query(\"[].event.dst.ip\") | unique}}"
+            },
+            "status": null,
+            "top": "570",
+            "left": "125",
+            "stepType": "\/api\/3\/workflow_step_types\/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+            "group": null,
+            "uuid": "c703178b-5a8d-4ad2-a2b0-2f28ff317efa"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Start",
+            "description": null,
+            "arguments": {
+                "route": "71da461c-22af-4670-a475-3dbe8f4a5c89",
+                "title": "FortiNDR Cloud: Fetch Detection Events",
+                "resources": [
+                    "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                    "input": {
+                        "params": [],
+                        "records": "{{vars.input.records}}"
+                    }
+                },
+                "displayConditions": {
+                    "alerts": {
+                        "sort": [],
+                        "limit": 30,
+                        "logic": "AND",
+                        "filters": []
+                    }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": false,
+                "singleRecordExecution": true
+            },
+            "status": null,
+            "top": "30",
+            "left": "125",
+            "stepType": "\/api\/3\/workflow_step_types\/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+            "group": null,
+            "uuid": "ef706baa-4f59-47f8-95a1-4cd9b8d3bcfd"
+        }
+    ],
+    "routes": [
+        {
+            "@type": "WorkflowRoute",
+            "name": "Start -> Configuration",
+            "targetStep": "\/api\/3\/workflow_steps\/4cd2c0b0-1ee7-4d3c-a3d1-b43d209b9a91",
+            "sourceStep": "\/api\/3\/workflow_steps\/ef706baa-4f59-47f8-95a1-4cd9b8d3bcfd",
+            "label": null,
+            "isExecuted": false,
+            "uuid": "2582a525-83c8-46ee-8d82-54ccc4027640"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Link the Asset -> Get Detection Events",
+            "targetStep": "\/api\/3\/workflow_steps\/ba89ed8f-e26a-404e-976d-5a0a3306b05d",
+            "sourceStep": "\/api\/3\/workflow_steps\/b39c2af6-db96-460a-bcd2-cfe2af2886b0",
+            "label": null,
+            "isExecuted": false,
+            "uuid": "2e7abfac-1e00-4a47-bc68-f6b56ba3dd47"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Configuration -> Link the Asset",
+            "targetStep": "\/api\/3\/workflow_steps\/b39c2af6-db96-460a-bcd2-cfe2af2886b0",
+            "sourceStep": "\/api\/3\/workflow_steps\/4cd2c0b0-1ee7-4d3c-a3d1-b43d209b9a91",
+            "label": null,
+            "isExecuted": false,
+            "uuid": "34c06c96-71d8-40ef-8cfe-015fa72475e4"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Get Detection Events -> Configuration_old",
+            "targetStep": "\/api\/3\/workflow_steps\/c703178b-5a8d-4ad2-a2b0-2f28ff317efa",
+            "sourceStep": "\/api\/3\/workflow_steps\/ba89ed8f-e26a-404e-976d-5a0a3306b05d",
+            "label": null,
+            "isExecuted": false,
+            "uuid": "a6b3b4a2-e15a-4f27-ab92-27938f7487fc"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Update Detection Data -> Update Record",
+            "targetStep": "\/api\/3\/workflow_steps\/0148eda7-688a-4bf7-8ab3-0c95c2440703",
+            "sourceStep": "\/api\/3\/workflow_steps\/c703178b-5a8d-4ad2-a2b0-2f28ff317efa",
+            "label": null,
+            "isExecuted": false,
+            "uuid": "d9678d1e-3fe4-4079-866f-45841040a2f5"
+        }
+    ],
+    "groups": [],
+    "priority": "\/api\/3\/picklists\/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+    "uuid": "a871d07b-ea0e-4a0a-a41d-78c35a157864",
+    "owners": [],
+    "isPrivate": false,
+    "deletedAt": null,
+    "recordTags": []
+}
