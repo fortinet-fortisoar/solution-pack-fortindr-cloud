@@ -4,7 +4,7 @@
     "name": "Scenario - FortiNDR Cloud Demo Alert Creation",
     "aliasName": null,
     "tag": null,
-    "description": "Fetch events for specified detection.",
+    "description": "Creates demo alert for FortiNDR Cloud detection.",
     "isActive": true,
     "debug": false,
     "singleRecordExecution": false,
