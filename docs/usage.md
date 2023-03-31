@@ -27,14 +27,14 @@ Navigate to demo alert and note the following:
     - Next steps
 
 
-- The playbook `Fortinet FortiNDR Cloud > Fetch Detection Events` runs manually and performs following actions.
+- The playbook `Fortinet FortiNDR Cloud > Fetch Detection Events` runs manually and performs the following actions.
 
     - Fetch events for specified detection and append the same to the source data in the alert.
 
-    - Creates a record for the asset on which data exfiltration issue detected and links the same to the alert.
+    - Creates a record for an asset on which the data exfiltration issue is detected and links it to the alert.
 
     - Extracts the indicators and populates fields such as `IP Addresses` and `File Hashes`
 
-    ![Data Exfiltation Alert](./res/data-exfiltration-alert.png)
+    ![Data Exfiltration Alert](./res/data-exfiltration-alert.png)
 
 
