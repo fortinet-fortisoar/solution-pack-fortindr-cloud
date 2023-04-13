@@ -1,5 +1,6 @@
 | [Home](../README.md) |
 |----------------------|
+
 # Installation
 
 1. To install a solution pack, click **Content Hub** > **Discover**.   
@@ -22,3 +23,6 @@ For optimal performance of the **FortiNDR Cloud** solution pack, you must config
 
 - Fortinet FortiNDR Cloud connectors to detect network anomalies
     - To configure and use the Fortinet FortiNDR Cloud connector, refer to [Configuring Fortinet FortiNDR Cloud](https://docs.fortinet.com/fortisoar/connectors/fortinet-fortindr-cloud)
+
+| [Usage](./docs/usage.md) | [Contents](./docs/contents.md) |
+|----------------------------------------------|------------------------|

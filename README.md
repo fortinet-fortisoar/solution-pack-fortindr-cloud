@@ -7,9 +7,9 @@
 
 # Overview
 
-The **FortiNDR Cloud** solution pack helps customers to readily orchestrate the investigation of detection.
+The **FortiNDR Cloud** solution pack helps customers to readily orchestrate the investigation of a detection.
 
-This solution pack includes scenario and use case playbooks that respond to the alerts raised by FortiNDR for data exfiltration.
+This solution pack includes scenarios and use case playbooks that respond to the alerts raised by FortiNDR for unauthorized data transfers (data exfiltration).
 
 # Next Steps
 
